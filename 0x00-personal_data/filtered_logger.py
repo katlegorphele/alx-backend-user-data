@@ -7,8 +7,7 @@ from typing import List
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
+    """Redacting Formatter class"""
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -20,22 +19,26 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         message = super().format(record)
-        return filter_datum(self.fields, self.REDACTION, message, self.SEPARATOR)
+        return filter_datum(self.fields,
+                            self.REDACTION, message, self.SEPARATOR)
 
 
-def filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> str:
+def filter_datum(
+    fields: List[str], redaction: str, message: str, separator: str
+) -> str:
     """returns the log message obfuscated
     Args:
-        fields: 
+        fields:
         redaction:
         message:
         seperator:
 
     """
     for field in fields:
-        message = re.sub(f'{field}=.+?{separator}',
-                         f'{field}={redaction}{separator}', message)
+        message = re.sub(
+            f"{field}=.+?{separator}",
+            f"{field}={redaction}{separator}", message
+        )
     return message
 
 
@@ -50,4 +53,3 @@ def filter_datum(fields: List[str], redaction: str,
 #     handler.setFormatter(formatter)
 #     logger.addHandler(handler)
 #     return logger
-
