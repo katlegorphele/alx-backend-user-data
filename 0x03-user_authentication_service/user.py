@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
-'''
+"""
 SQL Alchemy model for User table
-'''
+"""
 
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class User(Base):
-    '''
-    User table
-    '''
 
-    __tablename__ = 'users'
+class User(Base):
+    """
+    User table
+    """
+
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
     email = Column(String(250), nullable=False)
