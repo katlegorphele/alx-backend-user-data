@@ -68,6 +68,30 @@ class Auth:
         except NoResultFound:
             return None
         
+    def get_reset_password_token(self, email: str) -> str:
+        '''
+        '''
+        try:
+            user = self._db.find_user_by(email=email)
+            uid = _generate_uuid()
+            setattr(user, 'reset_token', uid)
+            self._db._session.commit()
+            return user.reset_token
+        except NoResultFound:
+            raise ValueError
+        
+    def update_password(self, reset_token: str, password: str) -> None:
+        '''
+        '''
+        try:
+            user = self._db.find_user_by(reset_token=reset_token)
+            hashed_password = _hash_password(password)
+            setattr(user, 'hashed_password', hashed_password)
+            setattr(user, 'reset_token', None)
+            self._db._session.commit()
+        except NoResultFound:
+            raise ValueError
+        
 
 def _hash_password(password: str) -> bytes:
     '''
