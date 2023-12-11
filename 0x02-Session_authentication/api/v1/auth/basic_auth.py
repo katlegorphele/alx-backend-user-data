@@ -58,12 +58,12 @@ class BasicAuth(Auth):
         Args:
             decode_base64_authorization_header (str): Description
         """
-        if decoded_base64_authorization_header is None:
-            return (None. None)
-        if not isinstance(decoded_base64_authorization_header, str):
+        if decode_base64_authorization_header is None:
             return (None, None)
-        if ':' not in decoded_base64_authorization_header:
+        if not isinstance(decode_base64_authorization_header, str):
             return (None, None)
-        email = decoded_base64_authorization_header.split(':')[0]
-        password = decoded_base64_authorization_header[len(email) + 1:]
+        if ':' not in decode_base64_authorization_header:
+            return (None, None)
+        email = decode_base64_authorization_header.split(':')[0]
+        password = decode_base64_authorization_header[len(email) + 1:]
         return (email, password)
